@@ -1,3 +1,2 @@
-*.iml      # 忽略所有 .a 结尾的文件
-targat/    # 忽略 build/ 目录下的所有文件
+﻿target/
 *.iml
