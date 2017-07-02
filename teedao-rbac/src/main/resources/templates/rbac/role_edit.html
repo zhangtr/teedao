@@ -1,0 +1,176 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <link href="../static/global/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/global/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/global/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link href="../static/global/plugins/select2/css/select2.min.css" th:href="@{/global/plugins/select2/css/select2.min.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/plugins/select2/css/select2-bootstrap.min.css" th:href="@{/global/plugins/select2/css/select2-bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/css/components.min.css" th:href="@{/global/css/components.min.css}" rel="stylesheet" id="style_components" type="text/css"/>
+    <link href="../static/global/css/plugins.min.css" th:href="@{/global/css/plugins.min.css}" rel="stylesheet" type="text/css"/>
+    <link href="../static/layouts/layout/css/layout.css" th:href="@{/layouts/layout/css/layout.css}" rel="stylesheet" type="text/css"/>
+    <link href="../static/layouts/layout/css/custom.css" th:href="@{/layouts/layout/css/custom.css}" rel="stylesheet" type="text/css"/>
+    <link href="../static/global/plugins/zTree/css/metroStyle.css" th:href="@{/global/plugins/zTree/css/metroStyle.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">用户权限管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>操作员编辑</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>录入框
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form id="edit_form" class="form-horizontal" action="/role/create" method="post">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色名称<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <input type="text" name="role" th:value="${role.role}" class="form-control"/>
+                                <input type="hidden" name="siteNo" th:value="${role.siteNo}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色描述</label>
+                            <div class="col-md-4">
+                                <input type="text" name="description" th:value="${role.description}" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">拥有的资源<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="form-control height-auto">
+                                    <div class="scroller" style="height:200px;" data-always-visible="1" >
+                                        <ul id="resourceTree" class="ztree"></ul>
+                                    </div>
+                                    <input type="hidden" name="resourceIds" id="resourceIds"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">状态<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="radio-list" data-error-container="#form_available_error">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="available" id="ava_a" value="1"/>可用</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="available" id="ava_u" value="0"/>不可用</label>
+                                </div>
+                                <div id="form_available_error"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger display-hide">
+                        <button class="close" data-close="alert"></button>
+                        <span>Enter any username and password. </span>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn green" type="submit">保存</button>
+                                <button class="btn default" onclick="javascript:history.back();" type="button">返回</button>                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END FOOTER -->
+<!--[if lt IE 9]>
+<script src="../static/global/plugins/respond.min.js" th:src="@{/global/plugins/respond.min.js}"></script>
+<script src="../static/global/plugins/excanvas.min.js" th:src="@{/global/plugins/excanvas.min.js}"></script>
+<script src="../static/global/plugins/ie8.fix.min.js" th:src="@{/global/plugins/ie8.fix.min.js}"></script>
+<![endif]-->
+<script src="../static/global/plugins/jquery.min.js" th:src="@{/global/plugins/jquery.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/bootstrap/js/bootstrap.min.js" th:src="@{/global/plugins/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery.blockui.min.js" th:src="@{/global/plugins/jquery.blockui.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" th:src="@{/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/select2/js/select2.full.min.js" th:src="@{/global/plugins/select2/js/select2.full.min.js}" type="text/javascript"></script>
+<script src="../static/global/scripts/app.js" th:src="@{/global/scripts/app.js}" type="text/javascript"></script>
+<script src="../static/layouts/layout/scripts/layout.js" th:src="@{/layouts/layout/scripts/layout.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery-validation/js/jquery.validate.min.js" th:src="@{/global/plugins/jquery-validation/js/jquery.validate.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery-validation/js/additional-methods.min.js" th:src="@{/global/plugins/jquery-validation/js/additional-methods.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery.form.min.js" th:src="@{/global/plugins/jquery.form.min.js}" type="text/javascript"></script>
+<script src="../static/layouts/page/scripts/rbac_role_edit.js" th:src="@{/layouts/page/scripts/rbac_role_edit.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/zTree/jquery.ztree.all.min.js" th:src="@{/global/plugins/zTree/jquery.ztree.all.min.js}" type="text/javascript"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var treeObj=null;
+    var resourceJson = /*[[${resourceJson}]]*/ null;
+    var op = [[${op}]];
+    var setting = {
+        view: {
+            selectedMulti: false
+        },
+        check: {
+            enable: true,
+            chkboxType : { "Y" : "", "N" : "ps" },
+            chkDisabledInherit: true
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback:{
+            onCheck: zTreeOnCheck
+        }
+    };
+    //初始化功能树
+    var zNodes =eval(resourceJson);
+    treeObj=$.fn.zTree.init($("#resourceTree"), setting, zNodes);
+
+    if(op=='update'){
+        var resourceIds=[[${role.resourceIds}]];
+        var available=[[${role.available}]];
+        var roleId = [[${role.id}]];
+        $('#edit_form').attr("action","/role/"+roleId+"/update");
+        if(available){
+            $('#ava_a').attr('checked',true);
+        }else{
+            $('#ava_u').attr('checked',true);
+        }
+        if(resourceIds.length>0){
+            var resources=resourceIds.split(",");
+            for(var i=0;i<resources.length;i++){
+                var nodes = treeObj.getNodesByParam("id", resources[i], null);
+                treeObj.checkNode(nodes[0], true, true);
+            }
+        }
+    }
+
+    function zTreeOnCheck(event, treeId, treeNode){
+        var nodes = treeObj.getCheckedNodes(true);
+
+        var ids="";
+        for(var i=0;i<nodes.length;i++){
+            ids+=(nodes[i].id+",");
+        }
+        if(ids.length>0){
+            ids=ids.substring(0,ids.length-1);
+        }
+        $("#resourceIds").val(ids);
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

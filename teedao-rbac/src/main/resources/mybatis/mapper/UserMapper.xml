@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teedao.rbac.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.teedao.rbac.entity.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="role_ids" property="roleIds" jdbcType="VARCHAR" />
+    <result column="locked" property="locked" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, realname, mobile, email, salt, role_ids, locked, create_time, 
+    last_modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.teedao.rbac.entity.User" >
+    insert into user (id, username, password, 
+      realname, mobile, email, 
+      salt, role_ids, locked, 
+      create_time, last_modify_time)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{roleIds,jdbcType=VARCHAR}, #{locked,jdbcType=BIT}, 
+      #{createTime,jdbcType=BIGINT}, #{lastModifyTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.teedao.rbac.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="roleIds != null" >
+        role_ids,
+      </if>
+      <if test="locked != null" >
+        locked,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="roleIds != null" >
+        #{roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        #{locked,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teedao.rbac.entity.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="roleIds != null" >
+        role_ids = #{roleIds,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teedao.rbac.entity.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      role_ids = #{roleIds,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectPageCount" resultType="Integer" parameterType="com.teedao.rbac.param.UserParam" >
+    select count(1)
+    from user
+    where 1=1
+    <if test="username != null and username != ''" >
+      and username = #{username,jdbcType=VARCHAR}
+    </if>
+    <if test="realname != null and realname!=''" >
+      and realname = #{realname,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectPageList" resultMap="BaseResultMap" parameterType="com.teedao.rbac.param.UserParam" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where 1=1
+    <if test="username != null and username != ''" >
+      and username = #{username,jdbcType=VARCHAR}
+    </if>
+    <if test="realname != null and realname!=''" >
+      and realname = #{realname,jdbcType=VARCHAR}
+    </if>
+    ORDER by last_modify_time desc
+    <if test="length != null and length >0 " >
+      limit #{start} , #{length}
+    </if>
+  </select>
+</mapper>

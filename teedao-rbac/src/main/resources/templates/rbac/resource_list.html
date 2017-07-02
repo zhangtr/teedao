@@ -1,0 +1,273 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8" />
+    <link href="../static/global/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/global/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/plugins/bootstrap/css/bootstrap.min.css" th:href="@{/global/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/css/components.min.css" th:href="@{/global/css/components.min.css}" rel="stylesheet" id="style_components"  type="text/css" />
+    <link href="../static/global/css/plugins.min.css" th:href="@{/global/css/plugins.min.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/layouts/layout/css/layout.css" th:href="@{/layouts/layout/css/layout.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/layouts/layout/css/custom.css" th:href="@{/layouts/layout/css/custom.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/plugins/jquery-treetable/css/jquery.treetable.css" th:href="@{/global/plugins/jquery-treetable/css/jquery.treetable.css}" rel="stylesheet" type="text/css" />
+    <link href="../static/global/plugins/jquery-treetable/css/jquery.treetable.theme.default.css" th:href="@{/global/plugins/jquery-treetable/css/jquery.treetable.theme.default.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="#">用户权限管理</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>资源管理</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="submitForm" action="/resource" method="get">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">资源站点</label>
+                            <div class="col-md-9">
+                                <select class="form-control form-filter" name="siteNo" id="siteNo">
+                                    <option th:each="site:${sites}" th:value="${site.siteNo}" th:text="${site.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn green" id="query_button" type="button">查询</button>
+                        <button class="btn default" id="clean_button" type="button">清空</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">资源列表</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn dark btn-outline btn-circle btn-sm" href="javascript:;" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">操作
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li shiro:hasPermission="resource:create">
+                                <a href="javascript:;" id="create_button">新增</a>
+                            </li>
+                            <li shiro:hasPermission="resource:update">
+                                <a href="javascript:;" id="update_button">修改</a>
+                            </li>
+                            <li  shiro:hasPermission="resource:delete">
+                                <a href="javascript:;" id="delete_button">删除</a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li shiro:hasPermission="resource:create">
+                                <a data-toggle="modal" href="#responsive" >添加根目录</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-responsive">
+                    <table id="tree_table" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>功能名称 </th>
+                            <th>功能类型</th>
+                            <th>URL路径</th>
+                            <th>权限</th>
+                            <th>图标</th>
+                            <th>排序</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody id="data_body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- responsive -->
+<div id="responsive" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">添加目录</h4>
+            </div>
+            <div class="modal-body">
+                <div class="scroller" style="height:200px" data-always-visible="1" data-rail-visible1="1">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">站点名称</label>
+                                <div class="col-md-9">
+                                    <span id="siteName">权限管理系统</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">目录名称</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="name" id="name" placeholder="输入目录名称" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">图标</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="icon" id="icon" placeholder="输入图标名称" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn default">关闭</button>
+            <button type="button" id="submitBtn" class="btn green">添加</button>
+        </div>
+    </div>
+</div>
+<!-- END FOOTER -->
+<!--[if lt IE 9]>
+<script src="../static/global/plugins/respond.min.js" th:src="@{/global/plugins/respond.min.js}"></script>
+<script src="../static/global/plugins/excanvas.min.js" th:src="@{/global/plugins/excanvas.min.js}"></script>
+<script src="../static/global/plugins/ie8.fix.min.js" th:src="@{/global/plugins/ie8.fix.min.js}"></script>
+<![endif]-->
+<script src="../static/global/plugins/jquery.min.js" th:src="@{/global/plugins/jquery.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/bootstrap/js/bootstrap.min.js" th:src="@{/global/plugins/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery.cokie.min.js" th:src="@{/global/plugins/jquery.cokie.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" th:src="@{/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery.blockui.min.js" th:src="@{/global/plugins/jquery.blockui.min.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" th:src="@{/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js}" type="text/javascript"></script>
+<script src="../static/global/scripts/app.js" th:src="@{/global/scripts/app.js}" type="text/javascript"></script>
+<script src="../static/layouts/layout/scripts/layout.js" th:src="@{/layouts/layout/scripts/layout.js}" type="text/javascript"></script>
+<script src="../static/global/plugins/jquery-treetable/jquery.treetable.js" th:src="@{/global/plugins/jquery-treetable/jquery.treetable.js}" type="text/javascript"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    //多选列表渲染
+    var selectedId=-1;
+    var selectedType='';
+    var resources = /*[[${resourceList}]]*/ null;
+    for(var i=0;i<resources.length;i++){
+        var resource=resources[i];
+        var row="<tr data-tt-id='"+resource.id+"' ";
+        if(resource.parentId!=0){
+            row+="data-tt-parent-id='"+resource.parentId+"'>";
+        }else{
+            row+= ">";
+        }
+        row+="<td>"+resource.name+"</td>";
+        row+="<td>"+resource.type+"</td>";
+        row+="<td>"+resource.url+"</td>";
+        row+="<td>"+resource.permission+"</td>";
+        row+="<td><i class=\"fa "+resource.icon+"\"></i></td>";
+        row+="<td>"+resource.orderNo+"</td>";
+        if(resource.available){
+            row+="<td>可用</td>";
+        }else{
+            row+="<td>不可用</td>";
+        }
+        row+="</tr>";
+        $("#data_body").append(row);
+    }
+    $("#tree_table").treetable({expandable: true});
+    $("#tree_table tbody").on("mousedown", "tr", function() {
+
+        $(".selected").not(this).removeClass("selected");
+        if($(this).hasClass("selected")){
+            $(this).removeClass("selected");
+            selectedId=-1;
+            selectedType='';
+        }else{
+            $(this).addClass("selected");
+            selectedId=$(this).attr("data-tt-id");
+            var this_td=$(this).find("td")[1];
+            selectedType=$(this_td).html();
+        }
+    });
+    jQuery(document).ready(function() {
+        $('#responsive').on('show.bs.modal', function () {
+            $('#siteName').text($("#siteNo option:selected").html());
+        });
+        //添加cookie 记录
+        var cs=$.cookie('current_site');
+        if(cs!=null&&cs!=''){
+            $("#siteNo").val(cs);
+        }
+        $("#query_button").click(function(){
+            var siteNo=$("#siteNo").val();
+            $.cookie('current_site',siteNo);
+            $('#submitForm').submit();
+            return true;
+        });
+
+
+        $("#create_button").click(function(){
+            if(selectedId<=0||selectedType!='menu'){
+                alert("请先选择一个目录");
+            }else{
+                window.location.href="/resource/"+selectedId+"/append";
+            }
+        });
+        $("#update_button").click(function(){
+            if(selectedId<=0){
+                alert("请先选择一个节点");
+            }else{
+                window.location.href="/resource/"+selectedId+"/update";
+            }
+        });
+        $("#delete_button").click(function(){
+            if(selectedId<=0){
+                alert("请先选择一个节点");
+            }else{
+                if(confirm("确定要删除数据吗？")) {
+                    jQuery.post("/resource/" + selectedId + "/delete", function (data) {
+                        if (data.rspCode == "000000") {
+                            window.location.reload();
+                        } else {
+                            alert(data.rspMsg)
+                        }
+                    }, "json");
+                }
+            }
+        });
+        $("#submitBtn").click(function(){
+            var name=$("#name").val();
+            var icon=$("#icon").val();
+            var siteNo=$("#siteNo").val();
+            jQuery.post("/resource/create",{'name':name,'icon':icon,'siteNo':siteNo}, function (data) {
+                if(data.rspCode=="000000"){
+                    window.location.reload();
+                }else{
+                    alert(data.rspMsg)
+                }
+            }, "json" );
+            $('#responsive').modal('hide');
+        });
+    });
+
+    /*]]>*/
+</script>
+</body>
+</html>

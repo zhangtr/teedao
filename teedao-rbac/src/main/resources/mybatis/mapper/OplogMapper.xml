@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teedao.rbac.dao.OplogMapper" >
+  <resultMap id="BaseResultMap" type="com.teedao.rbac.entity.Oplog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="site_no" property="siteNo" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGNVARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="operate_type" property="operateType" jdbcType="VARCHAR"/>
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, site_no, content, ip, create_time, operate_type, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from oplog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from oplog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.teedao.rbac.entity.Oplog" >
+    insert into oplog (id, user_id, site_no,
+    content, ip, create_time,
+    operate_type, status)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{siteNo,jdbcType=VARCHAR},
+    #{content,jdbcType=LONGNVARCHAR}, #{ip,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT},
+    #{operateType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.teedao.rbac.entity.Oplog" >
+    insert into oplog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="siteNo != null" >
+        site_no,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="siteNo != null" >
+        #{siteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGNVARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teedao.rbac.entity.Oplog" >
+    update oplog
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="siteNo != null" >
+        site_no = #{siteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGNVARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teedao.rbac.entity.Oplog" >
+    update oplog
+    set user_id = #{userId,jdbcType=BIGINT},
+      site_no = #{siteNo,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGNVARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      operate_type = #{operateType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectPageCount" resultType="Integer" parameterType="com.teedao.rbac.param.OplogParam" >
+    select count(1)
+    from oplog
+    where 1=1
+    <if test="siteNo != null" >
+      and site_no = #{siteNo,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="operateType != null" >
+      and operate_type = #{operateType,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectPageList" resultMap="BaseResultMap" parameterType="com.teedao.rbac.param.OplogParam" >
+    select
+    <include refid="Base_Column_List" />
+    from oplog
+    where 1=1
+    <if test="siteNo != null" >
+      and site_no = #{siteNo,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="operateType != null" >
+      and operate_type = #{operateType,jdbcType=VARCHAR}
+    </if>
+    order by create_time desc
+    <if test="length != null and length >0 " >
+      limit #{start} , #{length}
+    </if>
+  </select>
+</mapper>

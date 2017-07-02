@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teedao.rbac.dao.SiteMapper" >
+
+  <resultMap id="BaseResultMap" type="com.teedao.rbac.entity.Site" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="site_no" property="siteNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="client_secret" property="clientSecret" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="last_modify_time" property="lastModifyTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, site_no, name, url, client_id, client_secret, create_time, last_modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from site
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from site
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.teedao.rbac.entity.Site" >
+    insert into site (id, site_no, name,
+    url, client_id, client_secret,
+    create_time, last_modify_time)
+    values (#{id,jdbcType=BIGINT}, #{siteNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{url,jdbcType=VARCHAR}, #{clientId,jdbcType=VARCHAR}, #{clientSecret,jdbcType=VARCHAR},
+    #{createTime,jdbcType=BIGINT}, #{lastModifyTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.teedao.rbac.entity.Site" >
+    insert into site
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="siteNo != null" >
+        site_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="clientSecret != null" >
+        client_secret,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="siteNo != null" >
+        #{siteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSecret != null" >
+        #{clientSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teedao.rbac.entity.Site" >
+    update site
+    <set >
+      <if test="siteNo != null" >
+        site_no = #{siteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSecret != null" >
+        client_secret = #{clientSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifyTime != null" >
+        last_modify_time = #{lastModifyTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teedao.rbac.entity.Site" >
+    update site
+    set site_no = #{siteNo,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    url = #{url,jdbcType=VARCHAR},
+    client_id = #{clientId,jdbcType=VARCHAR},
+    client_secret = #{clientSecret,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=BIGINT},
+    last_modify_time = #{lastModifyTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from site
+  </select>
+
+  <select id="selectPageCount" resultType="Integer" parameterType="com.teedao.rbac.param.SiteParam" >
+    select count(1)
+    from site
+    where 1=1
+    <if test="name != null and name != ''" >
+      and name=#{name,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectPageList" resultMap="BaseResultMap" parameterType="com.teedao.rbac.param.SiteParam" >
+    select
+    <include refid="Base_Column_List" />
+    from site
+    where 1=1
+    <if test="name != null and name != ''" >
+      and name=#{name,jdbcType=VARCHAR}
+    </if>
+    order by last_modify_time desc
+    <if test="length != null and length >0 " >
+      limit #{start} , #{length}
+    </if>
+  </select>
+
+  <select id="selectByClientId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from site
+    where client_id = #{clientId,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  <select id="selectByClientSecret" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from site
+    where client_secret = #{clientSecret,jdbcType=VARCHAR}
+    limit 1
+  </select>
+
+</mapper>
