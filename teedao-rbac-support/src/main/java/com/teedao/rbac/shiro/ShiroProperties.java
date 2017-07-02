@@ -14,13 +14,13 @@ import java.util.List;
 @ConfigurationProperties(prefix = "shiro.oauth2")
 public class ShiroProperties {
 
-    private String clientId;
-    private String clientSecret;
-    private String serverHost;
-    private String clientHost;
-    private List<String> staticUrls;
-    //sessionID 名称，各系统不一样，防止覆盖
-    private String sidName;
+    private String clientId;//客户端id
+    private String clientSecret;//客户端密钥
+    private String serverHost; //服务端地址
+    private String clientHost; //客户端地址，用于回调
+    private List<String> staticUrls; //不需要shiro过滤的静态资源请求
+    private String sidName;    //sessionID 名称，各系统不一样，防止覆盖
+
 
 
     public String getClientId() {
