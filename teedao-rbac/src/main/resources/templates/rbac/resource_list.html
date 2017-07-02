@@ -6,7 +6,6 @@
     <link href="../static/global/css/components.min.css" th:href="@{/global/css/components.min.css}" rel="stylesheet" id="style_components"  type="text/css" />
     <link href="../static/global/css/plugins.min.css" th:href="@{/global/css/plugins.min.css}" rel="stylesheet" type="text/css" />
     <link href="../static/layouts/layout/css/layout.css" th:href="@{/layouts/layout/css/layout.css}" rel="stylesheet" type="text/css" />
-    <link href="../static/layouts/layout/css/custom.css" th:href="@{/layouts/layout/css/custom.css}" rel="stylesheet" type="text/css" />
     <link href="../static/global/plugins/jquery-treetable/css/jquery.treetable.css" th:href="@{/global/plugins/jquery-treetable/css/jquery.treetable.css}" rel="stylesheet" type="text/css" />
     <link href="../static/global/plugins/jquery-treetable/css/jquery.treetable.theme.default.css" th:href="@{/global/plugins/jquery-treetable/css/jquery.treetable.theme.default.css}" rel="stylesheet" type="text/css" />
 </head>
@@ -84,24 +83,22 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <div class="table-responsive">
-                    <table id="tree_table" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>功能名称 </th>
-                            <th>功能类型</th>
-                            <th>URL路径</th>
-                            <th>权限</th>
-                            <th>图标</th>
-                            <th>排序</th>
-                            <th>状态</th>
-                        </tr>
-                        </thead>
-                        <tbody id="data_body">
+                <table id="tree_table" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>功能名称 </th>
+                        <th>功能类型</th>
+                        <th>URL路径</th>
+                        <th>权限</th>
+                        <th>图标</th>
+                        <th>排序</th>
+                        <th>状态</th>
+                    </tr>
+                    </thead>
+                    <tbody id="data_body">
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

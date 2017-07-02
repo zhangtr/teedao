@@ -6,7 +6,7 @@
 <!--<![endif]-->
 <head>
     <meta charset="utf-8" />
-    <title>基础服务管理系统</title>
+    <title>示例客户端管理系统</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="../static/global/plugins/font-awesome/css/font-awesome.min.css" th:href="@{/global/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
@@ -31,8 +31,7 @@
     </div>
     <div class="page-content-wrapper">
         <div class="page-content">
-            <iframe width="100%" height="1000" frameborder="0" marginheight="0" allowtransparency="true" scrolling="yes" th:method="POST" name="centerFrame" id="centerFrame">
-
+            <iframe width="100%" onload="this.height=570;" frameborder="0" marginheight="0" allowtransparency="true" scrolling="no" th:method="POST" name="centerFrame" id="centerFrame">
             </iframe>
         </div>
     </div>

@@ -29,7 +29,7 @@
     </div>
     <div class="page-content-wrapper">
         <div class="page-content">
-            <iframe width="100%" height="1000" frameborder="0" marginheight="0" allowtransparency="true" scrolling="yes" th:method="POST" name="centerFrame" id="centerFrame">
+            <iframe width="100%" onload="this.height=570;" frameborder="0" marginheight="0" allowtransparency="true" scrolling="no" th:method="POST" name="centerFrame" id="centerFrame">
             </iframe>
         </div>
     </div>
@@ -61,6 +61,18 @@
     function isCalled() {
         return true;
     }
+
+    function reinitIframe(){
+        var iframe = document.getElementById("centerFrame");
+        try{
+            var bHeight = iframe.contentWindow.document.body.scrollHeight;
+            var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+            var height = Math.max(bHeight, dHeight);
+            iframe.height = height;
+            console.log(height);
+        }catch (ex){}
+    }
+    window.setInterval("reinitIframe()", 1000);
 </script>
 </body>
 
